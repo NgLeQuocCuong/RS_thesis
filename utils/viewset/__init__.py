@@ -4,6 +4,15 @@ from django import http
 
 from utils.serializers import EmptySerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework.pagination import PageNumberPagination
+
+
+class LargeResultsSetPagination(PageNumberPagination):
+    page_size = 24
+    page_size_query_param = 'page_size'
+    max_page_size = 50
+
+
 
 PAGE_SIZE = 10
 PAGE_SIZE_MAX = 50
