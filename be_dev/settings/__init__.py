@@ -31,7 +31,6 @@ CACHES = {
 }
 
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
@@ -39,7 +38,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 
-    'DEFAULT_PAGINATION_CLASS': 'utils.viewset.LargeResultsSetPagination',
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'utils.viewset.pagination.LargeResultsSetPagination',
+    'PAGE_SIZE': 24,
 
     'DATETIME_FORMAT': '%s'
 }
