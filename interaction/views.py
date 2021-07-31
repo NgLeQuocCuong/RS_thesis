@@ -19,7 +19,7 @@ class GetInteractionOfProduct(generics.ListAPIView):
             data = super().list(request).data
 
             return JsonResponse({
-                'data': viewset.paginate_data(request, data),
+                'data': data,
                 'error_code': 0
             })
         except Exception as e:

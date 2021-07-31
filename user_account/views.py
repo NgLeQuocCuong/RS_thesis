@@ -86,7 +86,7 @@ class AuthViewSet(viewset.BaseView):
             users = User.objects.all()
             data = user_serializers.UserSerializer(users, many=True).data
             return self.get_response(
-                data = viewset.paginate_data(request, data), 
+                data = data, 
                 error_code=http_code.HttpSuccess
             )
         except:

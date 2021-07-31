@@ -80,7 +80,7 @@ class PopularProduct(generics.ListAPIView):
 
         try:
             data = super().list(request).data
-            data = viewset.paginate_data(request, data)
+            # data = viewset.paginate_data(request, data)
             return JsonResponse({"data": data, "error_code": 0})
         except Exception as e:
             print(f"Exception while filtering: {e}")
@@ -100,7 +100,7 @@ class AuthorView(generics.ListAPIView):
 
         try:
             data = super().list(request).data
-            data = viewset.paginate_data(request, data)
+            # data = viewset.paginate_data(request, data)
             return JsonResponse({"data": data, "error_code": 0})
         except Exception as e:
             print(f"Exception while filtering: {e}")
@@ -120,7 +120,7 @@ class PublisherView(generics.ListAPIView):
 
         try:
             data = super().list(request).data
-            data = viewset.paginate_data(request, data)
+            # data = viewset.paginate_data(request, data)
             return JsonResponse({"data": data, "error_code": 0})
         except Exception as e:
             print(f"Exception while filtering: {e}")
@@ -169,7 +169,7 @@ class RecommendProduct(generics.ListAPIView):
             data = serializers.ItemSerializer(
                             recommend_book, many=True
                         ).data
-            data = viewset.paginate_data(request, data)
+            # data = viewset.paginate_data(request, data)
 
             return JsonResponse(
                 {
@@ -204,7 +204,7 @@ class RelatedProduct(generics.ListAPIView):
         try:
 
             data = super().list(request).data
-            data = viewset.paginate_data(request, data)
+            # data = viewset.paginate_data(request, data)
 
             return JsonResponse({"data": data, "error_code": 0})
         except Exception as e:
