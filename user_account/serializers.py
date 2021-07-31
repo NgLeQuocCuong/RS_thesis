@@ -147,3 +147,9 @@ class ResetPasswordSerializer(serializers.Serializer):
     def validate_password(self, value):
         auth.password_validation.validate_password(password=value)
         return value
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'name', 'uid']
+        read_only_fields = fields

@@ -1,23 +1,23 @@
 from rest_framework import filters
 
-from .recommenders.CB_model import cb
+# from .recommenders.CB_model import cb
 
 
-class ContentFilter(filters.BaseFilterBackend):
-    def filter_queryset(self, request, queryset, view):
-        from .models import Book
+# class ContentFilter(filters.BaseFilterBackend):
+#     def filter_queryset(self, request, queryset, view):
+#         from .models import Book
 
-        book_id = request.GET.get("id", None)
+#         book_id = request.GET.get("id", None)
 
-        base_book = Book.objects.filter(uid=book_id)
+#         base_book = Book.objects.filter(uid=book_id)
 
-        queryset = queryset.filter(
-            categories__in=list(base_book.values_list("categories", flat=True))
-        ).exclude(uid=book_id)
+#         queryset = queryset.filter(
+#             categories__in=list(base_book.values_list("categories", flat=True))
+#         ).exclude(uid=book_id)
 
-        queryset = cb.run(base_book, queryset)
+#         queryset = cb.run(base_book, queryset)
 
-        return queryset
+#         return queryset
 
 
 class PriceFilter(filters.BaseFilterBackend):
