@@ -2,4 +2,8 @@ from rest_framework import routers
 from django.urls import path
 from . import views
 
-urlpatterns = [path('list_interaction/', views.GetInteractionOfProduct.as_view(), name='List Interaction')]
+router = routers.DefaultRouter(trailing_slash=False)
+router.register("", views.GetInteractionOfProduct, basename="interaction")
+
+urlpatterns = router.urls
+

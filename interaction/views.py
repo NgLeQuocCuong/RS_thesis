@@ -1,4 +1,4 @@
-from rest_framework import permissions, decorators, exceptions, generics, filters
+from rest_framework import permissions, decorators, exceptions, generics, filters, viewsets
 from . import serializer, models, filter as interaction_filter
 from utils import viewset
 
@@ -6,14 +6,15 @@ from utils import viewset
 
 
 
-class GetInteractionOfProduct(generics.ListAPIView):
+class GetInteractionOfProduct(viewsets.GenericViewSet):
     queryset = models.Interaction.objects.all()
     permission_classes = (permissions.AllowAny, )
     serializer_class = serializer.InteractionSerializer
     filter_backends = [filters.SearchFilter, interaction_filter.InteractionFilter]
     search_fields = ['uid']
 
-    def list(self, request):
+    @decorators.action(methods=['GET'], detail=False, url_path='list')
+    def list_interaction(self, request):
         from django.http import JsonResponse
         try: 
             data = super().list(request).data
