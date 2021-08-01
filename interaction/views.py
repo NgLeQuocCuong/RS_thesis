@@ -17,8 +17,10 @@ class GetInteractionOfProduct(viewsets.GenericViewSet):
 
     @decorators.action(methods=['GET'], detail=False, url_path='list')
     def list_interaction(self, request):
+        uid = request.GET.get('uid', None)
+
         try: 
-            data = models.Interaction.objects.all()
+            data = models.Interaction.objects.filter(book__uid=uid)
             data = serializer.InteractionSerializer(data, many = True).data
             # pagination = viewset.pagination.LargeResultsSetPagination().paginate_queryset(data, request).get_paginated_response()
             data = viewset.paginate_data(request, data)
@@ -38,7 +40,7 @@ class GetInteractionOfProduct(viewsets.GenericViewSet):
     def get_rate_of_user(self, request):
         user = request.user
         book = request.GET.get('uid', None)
-        try:
+        try:   
             interaction = models.Interaction.objects.get(user=user, book__uid=book)
             return JsonResponse({
                 'data': serializer.InteractionSerializer(interaction),
@@ -47,7 +49,7 @@ class GetInteractionOfProduct(viewsets.GenericViewSet):
         except: 
             return JsonResponse({
                 'data': None,
-                'error_code': 500
+                'error_code': 0
             })
 
     @decorators.action(methods=['POST'], detail=False, url_path='rate')
@@ -59,7 +61,7 @@ class GetInteractionOfProduct(viewsets.GenericViewSet):
         header = request.POST.get('header', '')
 
         try:
-            interaction = models.Interaction.objects.get(user=user, book__uid=book)
+            interaction = models.Interaction.objects.create_or_update(user=user, book__uid=book)
             interaction.rate = rate
             interaction.content = content
             interaction.header = header
