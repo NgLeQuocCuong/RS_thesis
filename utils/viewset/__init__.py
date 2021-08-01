@@ -32,8 +32,8 @@ def paginate_data(request, data):
     }
     '''
 
-    page = int(request.data.get('page', 1))
-    page_size = int(request.data.get('page_size', PAGE_SIZE))
+    page = int(request.GET.get('page', 1))
+    page_size = int(request.GET.get('page_size', PAGE_SIZE))
 
     # Handle page_size = 'all'
     # page_size = 0 for get all
