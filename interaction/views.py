@@ -2,6 +2,8 @@ from rest_framework import permissions, decorators, exceptions, generics, filter
 from . import serializer, models, filter as interaction_filter
 from utils import viewset
 
+
+from django.http import JsonResponse
 # Create your views here.
 
 
@@ -15,9 +17,11 @@ class GetInteractionOfProduct(viewsets.GenericViewSet):
 
     @decorators.action(methods=['GET'], detail=False, url_path='list')
     def list_interaction(self, request):
-        from django.http import JsonResponse
         try: 
-            data = super().list(request).data
+            data = models.Interaction.objects.all()
+            data = serializer.InteractionSerializer(data, many = True).data
+            # pagination = viewset.pagination.LargeResultsSetPagination().paginate_queryset(data, request).get_paginated_response()
+            data = viewset.paginate_data(request, data)
 
             return JsonResponse({
                 'data': data,
@@ -47,7 +51,7 @@ class GetInteractionOfProduct(viewsets.GenericViewSet):
             })
 
     @decorators.action(methods=['POST'], detail=False, url_path='rate')
-    def get_rate_of_user(self, request):
+    def create_rate_of_user(self, request):
         user = request.user
         book = request.POST.get('uid', None)
         rate = request.POST.get('rate', None)
